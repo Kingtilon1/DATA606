@@ -98,28 +98,32 @@ summary(world_salary[, c("median_salary", "average_salary", "lowest_salary", "hi
 
 ## Exploratory data analysis
 
-
+### Histogram to visualize the distribution of median salary
 ```{r}
-# Boxplot to visualize median salary distribution
-ggplot(world_salary, aes(x = geographical_region, y = median_salary)) +
-  geom_boxplot() +
-  labs(title = "Boxplot of Median Salary by Geographical Region",
-       x = "Geographical Region",
-       y = "Median Salary") +
-  theme_bw()
-```
-Histogram to visualize the distribution of median salary
-
-```{r}
-ggplot(world_salary, aes(x = median_salary)) +
-  geom_histogram(binwidth = 500) +
+ggplot(world_salary, aes(x = median_salary, fill = ..x..)) +
+  geom_histogram(binwidth = 500, color = "white", alpha = 0.7) +
+  scale_fill_gradient(low = "lightblue", high = "darkblue") +
   labs(title = "Histogram of Median Salary",
        x = "Median Salary",
        y = "Frequency") +
-  theme_bw()
+  theme_minimal() +
+  theme(axis.text = element_text(color = "darkblue"),
+        axis.title = element_text(color = "darkblue"),
+        plot.title = element_text(color = "darkblue", size = 16, face = "bold"))
 ```
 
 
+### Box plot for a more detailed view
+```{r}
+ggplot(world_salary, aes(x = geographical_region, y = median_salary, fill = geographical_region)) +
+  geom_boxplot(color = "darkblue", alpha = 0.7, outlier.color = "red") +
+  labs(title = "Boxplot of Median Salary by Geographical Region",
+       x = "Geographical Region",
+       y = "Median Salary") +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Set3") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
 
 ## Inference 
 
@@ -138,7 +142,16 @@ world_salary <- world_salary %>%
 
 
 ```{r }
-ggplot(world_salary, aes(x=median_salary, y=Northern_America  )) + geom_boxplot() + theme_bw()
+ggplot(world_salary, aes(x = median_salary, y = Northern_America, fill = Northern_America)) +
+  geom_boxplot(color = "darkblue", alpha = 0.7, outlier.color = "red") +
+  scale_fill_manual(values = c("lightblue", "lightgreen")) +  # Custom fill colors
+  labs(title = "Boxplot of Median Salary by Region",
+       x = "Median Salary",
+       y = "Region") +
+  theme_minimal() +
+  theme(axis.text = element_text(color = "darkblue"),
+        axis.title = element_text(color = "darkblue"),
+        plot.title = element_text(color = "darkblue", size = 16, face = "bold"))
 ```
 
 
